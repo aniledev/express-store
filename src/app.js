@@ -99,7 +99,7 @@ app.post("/user", (req, res) => {
   users.push(newUser);
 
   //at this point in the pipeline all validation passed
-  res.send("All validation passed");
+  res.status(204).end();
 });
 
 // CATCH ANY THROWN ERRORS AND THEN DEFINE THE ERROR AND KEEP THE APPLICATION RUNNING; STILL MIDDLEWARE
