@@ -8,20 +8,26 @@ const { NODE_ENV } = require("./config");
 
 const app = express();
 
-const morganOption = NODE_ENV === "production" ? "tiny" : "common";
+const morganOption = NODE_ENV === "production" ? "tiny" : "dev";
 
 //STANDARD MIDDLEWARE
 app.use(morgan(morganOption));
+//built in method that parses the request body
 app.use(helmet());
 app.use(cors());
+app.use(express.json());
 
-//ROUTES
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
+// ROUTES/ENDPOINTS
+app.post("/", (req, res) => {
+  console.log(req.body);
+  res.send("POST request received.");
 });
 
-// CATCH ANY THROWN ERRORS AND THEN DEFINE THE ERROR AND KEEP THE APPLICATION RUNNING;
-//STILL MIDDLEWARE
+app.get("/", (req, res) => {
+  res.send("A GET Request");
+});
+
+// CATCH ANY THROWN ERRORS AND THEN DEFINE THE ERROR AND KEEP THE APPLICATION RUNNING; STILL MIDDLEWARE
 app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === "production") {
