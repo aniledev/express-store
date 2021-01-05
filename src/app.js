@@ -103,7 +103,22 @@ app.post("/user", (req, res) => {
 });
 
 app.delete("/user/:userId", (req, res) => {
-  // ...
+  const { userId } = req.params;
+
+  const index = users.findIndex((u) => u.id === userId);
+
+  // -1 indicates that a match was not found
+  if (index === -1) {
+    return res.status(404).send("User not found");
+  }
+
+  users.splice(index, 1);
+
+  res.send("Deleted");
+});
+
+app.get("/user", (req, res) => {
+  res.json(users);
 });
 
 // CATCH ANY THROWN ERRORS AND THEN DEFINE THE ERROR AND KEEP THE APPLICATION RUNNING; STILL MIDDLEWARE
